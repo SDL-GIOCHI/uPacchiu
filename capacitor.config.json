@@ -1,0 +1,8 @@
+{
+  "appId": "app.lentinia.pokedex",
+  "appName": "Pokédex Lentinia",
+  "webDir": "web",
+  "backgroundColor": "#FFFFFF",
+  "server": { "url": "https://UTENTE.github.io/REPO/", "androidScheme": "https", "cleartext": false },
+  "android": { "allowMixedContent": false }
+}
