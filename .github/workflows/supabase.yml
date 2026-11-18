@@ -1,0 +1,25 @@
+name: Supabase (migrazioni + Edge Function)
+
+# Facoltativo: in alternativa puoi eseguire il file SQL a mano dal SQL Editor di Supabase
+# e pubblicare la funzione con `supabase functions deploy manage-players`.
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['supabase/**']
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+      SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
+      PROJECT_REF: ${{ vars.SUPABASE_PROJECT_REF }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: supabase/setup-cli@v1
+        with:
+          version: latest
+      - run: supabase link --project-ref "$PROJECT_REF"
+      - run: supabase db push
+      - run: supabase functions deploy manage-players --project-ref "$PROJECT_REF"
